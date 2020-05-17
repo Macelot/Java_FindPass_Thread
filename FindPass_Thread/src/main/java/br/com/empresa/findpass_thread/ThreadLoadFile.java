@@ -57,8 +57,6 @@ public class ThreadLoadFile implements Runnable{
         this.passwordTarget = passwordTarget;
     }
 
-
-
     public String getFile() {
         return file;
     }
@@ -75,9 +73,7 @@ public class ThreadLoadFile implements Runnable{
         ThreadLoadFile.debugLevel = debugLevel;
     }
     
-    
-    
-    
+   
     @Override
     public void run() {
         while (!this.exit) {
@@ -101,6 +97,7 @@ public class ThreadLoadFile implements Runnable{
                         System.out.println("---------Found---------");
                         this.found=true;
                         this.exit=true;
+                        //this.stopThread();
                         break;
                     }
                     linha=bf.readLine(); 
@@ -114,15 +111,18 @@ public class ThreadLoadFile implements Runnable{
                 
                 this.setTotal(this.getPasswords().size());
                 long fim = System.currentTimeMillis(); 
-                System.out.println("\n Time lapsed : " + ((fim - inicio)/1000) + " seconds.");
+                System.out.println("\n Time lapsed : " + ((fim - inicio)) + " mili seconds.");
+                this.stopThread();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Erro "+e.getMessage());
             }  
         }
     }
-    void stop(){
+    void stopThread(){
+        this.passwords = null;
         this.exit = true;
+        
     }
 }
 
